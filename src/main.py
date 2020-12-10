@@ -2,6 +2,7 @@ import tcod
 
 import copy
 
+import color
 from engine import Engine
 import entity_factories
 from procgen import generate_dungeon
@@ -13,7 +14,7 @@ def main() -> None:
 
     #map size setup
     map_width = 80
-    map_height = 45
+    map_height = 43
 
     #dungeon map info setup
     room_max_size = 10
@@ -43,6 +44,10 @@ def main() -> None:
 
     engine.update_fov()
 
+    engine.message_log.add_message(
+        "You are in a middle of the dungeon. You have no idea where you are. The only source of light is a small torch in your hand.", color.welcome_text
+    )
+
     #building new terminal window
     with tcod.context.new_terminal(
         screen_width,
@@ -54,9 +59,11 @@ def main() -> None:
         #Setup console (order="F" makes Numpy array [x, y] instead of [y, x])
         root_console = tcod.Console(screen_width, screen_height, order="F")
         while True:
-            engine.render(console=root_console, context=context)
+            root_console.clear()
+            engine.event_handler.on_render(console=root_console)
+            context.present(root_console)
 
-            engine.event_handler.handle_events()
+            engine.event_handler.handle_events(context)
 
 
 
