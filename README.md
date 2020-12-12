@@ -6,3 +6,11 @@ Before running project first run:
 
 To run project run
 `python src/main.py`
+
+## Controls
+* Arrow Keys - Movement
+* V - View full log
+* G - Get item from the floor
+* I - use item from your Inventory
+* D - Drop Item from your inventory
+* ESCAPE - Exit game
