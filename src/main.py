@@ -6,6 +6,8 @@ import traceback
 import color
 from engine import Engine
 import entity_factories
+import exceptions
+import input_handlers
 from procgen import generate_dungeon
 
 def main() -> None:
@@ -51,6 +53,8 @@ def main() -> None:
         "You are in a middle of the dungeon. You have no idea where you are. The only source of light is a small torch in your hand.", color.welcome_text
     )
 
+    handler: input_handlers.BaseEventHandler = input_handlers.MainGameEventHandler(engine)
+
     #building new terminal window
     with tcod.context.new_terminal(
         screen_width,
@@ -61,19 +65,31 @@ def main() -> None:
     ) as context:
         #Setup console (order="F" makes Numpy array [x, y] instead of [y, x])
         root_console = tcod.Console(screen_width, screen_height, order="F")
-        while True:
-            root_console.clear()
-            engine.event_handler.on_render(console=root_console)
-            context.present(root_console)
+        try:
+            while True:
+                root_console.clear()
+                handler.on_render(console=root_console)
+                context.present(root_console)
 
-            try:
-                for event in tcod.event.wait():
-                    context.convert_event(event)
-                    engine.event_handler.handle_events(event)
-            except Exception:  # Handle exceptions in game.
-                traceback.print_exc()  # Print error to stderr.
-                # Then print the error to the message log.
-                engine.message_log.add_message(traceback.format_exc(), color.error)
+                try:
+                    for event in tcod.event.wait():
+                        context.convert_event(event)
+                        handler = handler.handle_events(event)
+                except Exception:  # Handle exceptions in game.
+                    traceback.print_exc()  # Print error to stderr.
+                    # Then print the error to the message log.
+                    if isinstance(handler, input_handlers.EventHandler):
+                        handler.engine.message_log.add_message(
+                            traceback.format_exc(), color.error
+                        )
+        except exceptions.QuitWithoutSaving:
+            raise
+        except SystemExit:  # Save and quit.
+            # TODO: Add the save function here
+            raise
+        except BaseException:  # Save on any other unexpected exception.
+            # TODO: Add the save function here
+            raise
 
 
 if __name__ == "__main__":
