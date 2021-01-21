@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import lzma
+import pickle
 from typing import TYPE_CHECKING
 
 from tcod.console import Console
@@ -34,6 +36,12 @@ class Engine:
                     pass  # Ignore impossible action exceptions from AI.
 
 
+
+    def save_as(self, filename: str) -> None:
+        """Save this Engine instance as a compressed file."""
+        save_data = lzma.compress(pickle.dumps(self))
+        with open(filename, "wb") as f:
+            f.write(save_data)
 
     def update_fov(self) -> None:
         """Recompute the visible area based on the players point of view."""
