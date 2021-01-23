@@ -13,4 +13,7 @@ To run project run
 * G - Get item from the floor
 * I - use item from your Inventory
 * D - Drop Item from your inventory
+* C - display Character infor
+* ">" - descend the staircase
+* "/" - look around
 * ESCAPE - Exit game
