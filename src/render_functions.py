@@ -37,6 +37,22 @@ def render_bar(
         x=1, y=45, string=f"HP: {current_value}/{maximum_value}", fg=color.bar_text
     )
 
+def render_xp_bar(
+    console: Console, current_value: int, maximum_value: int, total_width: int
+) -> None:
+    bar_width = int(float(current_value) / maximum_value * total_width)
+
+    console.draw_rect(x=0, y=49, width=20, height=1, ch=1, bg=color.xp_bar_empty)
+
+    if bar_width > 0:
+        console.draw_rect(
+            x=0, y=49, width=bar_width, height=1, ch=1, bg=color.xp_bar_filled
+        )
+
+    console.print(
+        x=1, y=49, string=f"XP: {current_value}/{maximum_value}", fg=color.bar_text
+    )
+
 def render_dungeon_level(
     console: Console, dungeon_level: int, location: Tuple[int, int]
 ) -> None:
@@ -46,6 +62,16 @@ def render_dungeon_level(
     x, y = location
 
     console.print(x=x, y=y, string=f"Dungeon level: {dungeon_level}")
+
+def render_player_level(
+    console: Console, player_name: str, player_level: int, location: Tuple[int, int]
+) -> None:
+    """
+    Render the level the player is currently on, at the given location.
+    """
+    x, y = location
+
+    console.print(x=x, y=y, string=f"{player_name} - Level {player_level}")
 
 
 def render_names_at_mouse_location(

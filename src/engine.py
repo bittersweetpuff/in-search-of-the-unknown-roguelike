@@ -66,10 +66,24 @@ class Engine:
             total_width=20,
         )
 
+        render_functions.render_xp_bar(
+            console=console,
+            current_value=self.player.level.current_xp,
+            maximum_value=self.player.level.experience_to_next_level,
+            total_width=20,
+        )
+
         render_functions.render_dungeon_level(
             console=console,
             dungeon_level=self.game_world.current_floor,
-            location=(0, 47),
+            location=(0, 46),
+        )
+
+        render_functions.render_player_level(
+            console=console,
+            player_name=self.player.name,
+            player_level=self.player.level.current_level,
+            location=(0, 48),
         )
 
         render_functions.render_names_at_mouse_location(
