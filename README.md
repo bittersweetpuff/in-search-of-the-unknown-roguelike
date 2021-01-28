@@ -17,3 +17,6 @@ To run project run
 * ">" - descend the staircase
 * "/" - look around
 * ESCAPE - Exit game
+
+## Based on
+A Python3 tcod tutorial (also source of title screen): http://rogueliketutorials.com/tutorials/tcod/v2/ 
