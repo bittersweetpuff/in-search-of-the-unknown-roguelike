@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from engine import Engine
     from entity import Actor, Entity, Item
 
-#Main action class. Other actions will be subclasses of this class. 
+# Main action class. Other actions will be subclasses of this class.
 class Action:
     def __init__(self, entity: Actor) -> None:
         super().__init__()
@@ -19,7 +19,6 @@ class Action:
     def engine(self) -> Engine:
         """Return the engine this action belongs to."""
         return self.entity.gamemap.engine
-
 
     def perform(self) -> None:
         """Perform this action with the objects needed to determine its scope.
@@ -57,6 +56,7 @@ class PickupAction(Action):
                 return
 
         raise exceptions.Impossible("There is nothing here to pick up.")
+
 
 class ItemAction(Action):
     def __init__(
@@ -101,13 +101,14 @@ class TakeStairsAction(Action):
         else:
             raise exceptions.Impossible("There are no stairs here.")
 
+
 class ActionWithDirection(Action):
     def __init__(self, entity: Actor, dx: int, dy: int):
         super().__init__(entity)
 
         self.dx = dx
         self.dy = dy
-    
+
     @property
     def dest_xy(self) -> Tuple[int, int]:
         """Returns this actions destination."""
@@ -118,16 +119,14 @@ class ActionWithDirection(Action):
         """Return the blocking entity at this actions destination.."""
         return self.engine.game_map.get_blocking_entity_at_location(*self.dest_xy)
 
-
     @property
     def target_actor(self) -> Optional[Actor]:
         """Return the actor at this actions destination."""
         return self.engine.game_map.get_actor_at_location(*self.dest_xy)
 
-
     def perform(self) -> None:
         raise NotImplementedError()
-    
+
 
 class MeleeAction(ActionWithDirection):
     def perform(self) -> None:
@@ -153,9 +152,9 @@ class MeleeAction(ActionWithDirection):
                 f"{attack_desc} but does no damage.", attack_color
             )
 
+
 # movement
 class MovementAction(ActionWithDirection):
-
     def perform(self) -> None:
         dest_x, dest_y = self.dest_xy
 

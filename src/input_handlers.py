@@ -7,12 +7,7 @@ from typing import Callable, Optional, Tuple, TYPE_CHECKING, Union
 import tcod.event
 
 import actions
-from actions import (
-    Action,
-    BumpAction,
-    PickupAction,
-    WaitAction
-)
+from actions import Action, BumpAction, PickupAction, WaitAction
 import color
 import exceptions
 
@@ -114,10 +109,10 @@ class PopupMessage(BaseEventHandler):
         """Any key returns to the parent handler."""
         return self.parent
 
+
 class EventHandler(BaseEventHandler):
     def __init__(self, engine: Engine):
         self.engine = engine
-
 
     def handle_events(self, event: tcod.event.Event) -> BaseEventHandler:
         """Handle events for input handlers with an engine."""
@@ -156,7 +151,6 @@ class EventHandler(BaseEventHandler):
     def ev_mousemotion(self, event: tcod.event.MouseMotion) -> None:
         if self.engine.game_map.in_bounds(event.tile.x, event.tile.y):
             self.engine.mouse_location = event.tile.x, event.tile.y
-
 
     def on_render(self, console: tcod.Console) -> None:
         self.engine.render(console)
@@ -297,7 +291,7 @@ class LevelUpEventHandler(AskUserEventHandler):
             return None
 
         return super().ev_keydown(event)
-        
+
     def ev_mousebuttondown(
         self, event: tcod.event.MouseButtonDown
     ) -> Optional[ActionOrHandler]:
@@ -305,6 +299,7 @@ class LevelUpEventHandler(AskUserEventHandler):
         Don't allow the player to click to exit the menu, like normal.
         """
         return None
+
 
 class InventoryEventHandler(AskUserEventHandler):
     """This handler lets the user select an item.
@@ -331,7 +326,7 @@ class InventoryEventHandler(AskUserEventHandler):
             x = 40
         else:
             x = 0
-        
+
         y = 0
 
         width = len(self.TITLE) + 4
@@ -566,6 +561,7 @@ CURSOR_Y_KEYS = {
     tcod.event.K_PAGEUP: -10,
     tcod.event.K_PAGEDOWN: 10,
 }
+
 
 class HistoryViewer(EventHandler):
     """Print the history on a larger window which can be navigated."""

@@ -12,6 +12,7 @@ from input_handlers import (
     AreaRangedAttackHandler,
     SingleRangedAttackHandler,
 )
+
 if TYPE_CHECKING:
     from entity import Actor, Item
 
@@ -36,6 +37,7 @@ class Consumable(BaseComponent):
         inventory = entity.parent
         if isinstance(inventory, components.inventory.Inventory):
             inventory.items.remove(entity)
+
 
 class ConfusionConsumable(Consumable):
     def __init__(self, number_of_turns: int):
@@ -66,9 +68,12 @@ class ConfusionConsumable(Consumable):
             color.status_effect_applied,
         )
         target.ai = components.ai.ConfusedEnemy(
-            entity=target, previous_ai=target.ai, turns_remaining=self.number_of_turns,
+            entity=target,
+            previous_ai=target.ai,
+            turns_remaining=self.number_of_turns,
         )
         self.consume()
+
 
 class HealingConsumable(Consumable):
     def __init__(self, amount: int):
@@ -121,6 +126,7 @@ class FireballDamageConsumable(Consumable):
         if not targets_hit:
             raise Impossible("There are no targets in the radius.")
         self.consume()
+
 
 class LightningDamageConsumable(Consumable):
     def __init__(self, damage: int, maximum_range: int):

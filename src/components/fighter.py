@@ -10,6 +10,7 @@ from render_order import RenderOrder
 if TYPE_CHECKING:
     from entity import Actor
 
+
 class Fighter(BaseComponent):
     parent: Actor
 

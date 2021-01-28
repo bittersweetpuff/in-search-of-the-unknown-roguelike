@@ -8,7 +8,6 @@ import input_handlers
 import setup_game
 
 
-
 def save_game(handler: input_handlers.BaseEventHandler, filename: str) -> None:
     """If the current event handler has an active Engine then save it."""
     if isinstance(handler, input_handlers.EventHandler):
@@ -17,18 +16,18 @@ def save_game(handler: input_handlers.BaseEventHandler, filename: str) -> None:
 
 
 def main() -> None:
-    #screen size setup
+    # screen size setup
     screen_width = 80
     screen_height = 50
 
-    #tileset setup
+    # tileset setup
     tileset = tcod.tileset.load_tilesheet(
         "./resources/dejavu10x10_gs_tc.png", 32, 8, tcod.tileset.CHARMAP_TCOD
     )
 
     handler: input_handlers.BaseEventHandler = setup_game.MainMenu()
 
-    #building new terminal window
+    # building new terminal window
     with tcod.context.new_terminal(
         screen_width,
         screen_height,
@@ -36,7 +35,7 @@ def main() -> None:
         title="In Search of the Unknown",
         vsync=True,
     ) as context:
-        #Setup console (order="F" makes Numpy array [x, y] instead of [y, x])
+        # Setup console (order="F" makes Numpy array [x, y] instead of [y, x])
         root_console = tcod.Console(screen_width, screen_height, order="F")
         try:
             while True:

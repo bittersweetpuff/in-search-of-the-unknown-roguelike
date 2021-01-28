@@ -12,8 +12,8 @@ from components.base_component import BaseComponent
 if TYPE_CHECKING:
     from entity import Actor
 
-class BaseAI(Action):
 
+class BaseAI(Action):
     def perform(self) -> None:
         raise NotImplementedError()
 
@@ -87,7 +87,12 @@ class ConfusedEnemy(BaseAI):
 
             # The actor will either try to move or attack in the chosen random direction.
             # Its possible the actor will just bump into the wall, wasting a turn.
-            return BumpAction(self.entity, direction_x, direction_y,).perform()
+            return BumpAction(
+                self.entity,
+                direction_x,
+                direction_y,
+            ).perform()
+
 
 class HostileEnemy(BaseAI):
     def __init__(self, entity: Actor):
@@ -109,7 +114,9 @@ class HostileEnemy(BaseAI):
         if self.path:
             dest_x, dest_y = self.path.pop(0)
             return MovementAction(
-                self.entity, dest_x - self.entity.x, dest_y - self.entity.y,
+                self.entity,
+                dest_x - self.entity.x,
+                dest_y - self.entity.y,
             ).perform()
 
         return WaitAction(self.entity).perform()

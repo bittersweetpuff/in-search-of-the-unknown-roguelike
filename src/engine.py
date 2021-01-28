@@ -21,12 +21,11 @@ class Engine:
 
     game_map: GameMap
     game_world: GameWorld
- 
+
     def __init__(self, player: Actor):
         self.message_log = MessageLog()
         self.mouse_location = (0, 0)
         self.player = player
-
 
     def handle_enemy_turns(self) -> None:
         for entity in set(self.game_map.actors) - {self.player}:
@@ -35,8 +34,6 @@ class Engine:
                     entity.ai.perform()
                 except exceptions.Impossible:
                     pass  # Ignore impossible action exceptions from AI.
-
-
 
     def save_as(self, filename: str) -> None:
         """Save this Engine instance as a compressed file."""

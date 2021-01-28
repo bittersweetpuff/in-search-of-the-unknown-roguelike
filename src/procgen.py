@@ -52,6 +52,7 @@ def get_max_value_for_floor(
 
     return current_value
 
+
 def get_entities_at_random(
     weighted_chances_by_floor: Dict[int, List[Tuple[Entity, int]]],
     number_of_entities: int,
@@ -85,14 +86,14 @@ class RectangularRoom:
         self.y1 = y
         self.x2 = x + width
         self.y2 = y + height
-    
+
     @property
     def center(self) -> Tuple[int, int]:
         center_x = int((self.x1 + self.x2) / 2)
         center_y = int((self.y1 + self.y2) / 2)
 
         return center_x, center_y
-    
+
     @property
     def inner(self) -> Tuple[slice, slice]:
         """Return the inner area of this room as a 2D array index."""
@@ -107,7 +108,12 @@ class RectangularRoom:
             and self.y2 >= other.y1
         )
 
-def place_entities(room: RectangularRoom, dungeon: GameMap, floor_number: int,) -> None:
+
+def place_entities(
+    room: RectangularRoom,
+    dungeon: GameMap,
+    floor_number: int,
+) -> None:
     number_of_monsters = random.randint(
         0, get_max_value_for_floor(max_monsters_by_floor, floor_number)
     )
@@ -193,15 +199,12 @@ def generate_dungeon(
                 dungeon.tiles[x, y] = tile_types.floor
             center_of_last_room = new_room.center
 
-
         # Place entities in room
         place_entities(new_room, dungeon, engine.game_world.current_floor)
-
 
         dungeon.tiles[center_of_last_room] = tile_types.down_stairs
         dungeon.downstairs_location = center_of_last_room
 
-        
         # Finally, append the new room to the list.
         rooms.append(new_room)
 

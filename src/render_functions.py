@@ -37,6 +37,7 @@ def render_bar(
         x=1, y=45, string=f"HP: {current_value}/{maximum_value}", fg=color.bar_text
     )
 
+
 def render_xp_bar(
     console: Console, current_value: int, maximum_value: int, total_width: int
 ) -> None:
@@ -53,6 +54,7 @@ def render_xp_bar(
         x=1, y=49, string=f"XP: {current_value}/{maximum_value}", fg=color.bar_text
     )
 
+
 def render_dungeon_level(
     console: Console, dungeon_level: int, location: Tuple[int, int]
 ) -> None:
@@ -62,6 +64,7 @@ def render_dungeon_level(
     x, y = location
 
     console.print(x=x, y=y, string=f"Dungeon level: {dungeon_level}")
+
 
 def render_player_level(
     console: Console, player_name: str, player_level: int, location: Tuple[int, int]

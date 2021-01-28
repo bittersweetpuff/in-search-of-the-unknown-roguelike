@@ -18,7 +18,6 @@ if TYPE_CHECKING:
 T = TypeVar("T", bound="Entity")
 
 
-
 class Entity:
     """
     A generic object to represent players, enemies, items, etc.
@@ -26,7 +25,17 @@ class Entity:
 
     parent: Union[GameMap, Inventory]
 
-    def __init__( self, parent: Optional[GameMap] = None, x: int = 0, y: int = 0, char: str = "?", color: Tuple[int, int, int] = (255, 255, 255),name: str = "<Unnamed>", blocks_movement: bool = False, render_order: RenderOrder = RenderOrder.CORPSE,):
+    def __init__(
+        self,
+        parent: Optional[GameMap] = None,
+        x: int = 0,
+        y: int = 0,
+        char: str = "?",
+        color: Tuple[int, int, int] = (255, 255, 255),
+        name: str = "<Unnamed>",
+        blocks_movement: bool = False,
+        render_order: RenderOrder = RenderOrder.CORPSE,
+    ):
         self.x = x
         self.y = y
         self.char = char
@@ -38,7 +47,7 @@ class Entity:
             # If parent isn't provided now then it will be set later.
             self.parent = parent
             parent.entities.add(self)
-    
+
     @property
     def gamemap(self) -> GameMap:
         return self.parent.gamemap
@@ -63,7 +72,6 @@ class Entity:
             self.parent = gamemap
             gamemap.entities.add(self)
 
-
     def distance(self, x: int, y: int) -> float:
         """
         Return the distance between the current entity and the given (x, y) coordinate.
@@ -74,6 +82,7 @@ class Entity:
         # Move the entity by a given amount
         self.x += dx
         self.y += dy
+
 
 class Actor(Entity):
     def __init__(
@@ -114,6 +123,7 @@ class Actor(Entity):
     def is_alive(self) -> bool:
         """Returns True as long as this actor can perform actions."""
         return bool(self.ai)
+
 
 class Item(Entity):
     def __init__(

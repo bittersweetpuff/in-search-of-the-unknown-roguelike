@@ -25,7 +25,11 @@ class MessageLog:
         self.messages: List[Message] = []
 
     def add_message(
-        self, text: str, fg: Tuple[int, int, int] = color.white, *, stack: bool = True,
+        self,
+        text: str,
+        fg: Tuple[int, int, int] = color.white,
+        *,
+        stack: bool = True,
     ) -> None:
         """Add a message to this log.
         `text` is the message text, `fg` is the text color.
@@ -38,7 +42,12 @@ class MessageLog:
             self.messages.append(Message(text, fg))
 
     def render(
-        self, console: tcod.Console, x: int, y: int, width: int, height: int,
+        self,
+        console: tcod.Console,
+        x: int,
+        y: int,
+        width: int,
+        height: int,
     ) -> None:
         """Render this log over the given area.
         `x`, `y`, `width`, `height` is the rectangular region to render onto
@@ -46,13 +55,14 @@ class MessageLog:
         """
         self.render_messages(console, x, y, width, height, self.messages)
 
-
     @staticmethod
     def wrap(string: str, width: int) -> Iterable[str]:
         """Return a wrapped text message."""
         for line in string.splitlines():  # Handle newlines in messages.
             yield from textwrap.wrap(
-                line, width, expand_tabs=True,
+                line,
+                width,
+                expand_tabs=True,
             )
 
     @classmethod

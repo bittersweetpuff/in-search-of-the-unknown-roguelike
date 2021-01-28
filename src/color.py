@@ -26,4 +26,3 @@ xp_bar_empty = (0x45, 0x45, 0x45)
 
 menu_title = (255, 255, 63)
 menu_text = white
-
